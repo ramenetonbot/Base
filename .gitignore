@@ -1,0 +1,14 @@
+dist/
+
+# Env variables
+.env
+
+
+# IDE
+.vscode/
+.idea/
+
+
+# npm
+package-lock.json
+node_modules/
