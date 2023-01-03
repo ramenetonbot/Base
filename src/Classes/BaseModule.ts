@@ -6,6 +6,7 @@ import {
 } from './Commands/';
 import { BaseClient, Logger } from '../index';
 import { ClientEvents } from 'oceanic.js';
+import { BaseEvent } from './BaseEvent';
 
 export type BaseModuleDatas = {
 	name: string,
@@ -28,7 +29,9 @@ export abstract class BaseModule {
 	protected name: string;
 	protected events: Array<keyof ClientEvents>;
 	private readonly client: BaseClient;
+	protected eventsCache: Map<keyof ClientEvents, BaseEvent>;
 
+	// TODO make manual Command registering
 	protected applicationCommands: Map<string, BaseApplicationCommand>;
 	protected autoCompleteCommands: Map<string, BaseAutoCompleteCommand>;
 	protected componentCommands: Map<string, BaseComponentCommand>;
@@ -38,6 +41,7 @@ export abstract class BaseModule {
 		this.client = client;
 		this.name = datas.name;
 		this.events = datas.events;
+		this.eventsCache = new Map();
 	}
 
 	protected getClient(): BaseClient {
@@ -83,5 +87,14 @@ export abstract class BaseModule {
 		Logger.log(`Registering command ${name} on module ${this.name}`, 'command');
 		collection.set(name, command);
 	}
+
+	public handleEvent(name: keyof ClientEvents, args: ClientEvents[keyof ClientEvents]): void {
+		const event = this.eventsCache.get(name);
+		if (event) {
+			event.run(args);
+		}
+	}
+
+	protected abstract registerEvents(): void
 
 }
