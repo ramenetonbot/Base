@@ -9,7 +9,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "publish": "npm run build && npm publish"
+    "upload": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
