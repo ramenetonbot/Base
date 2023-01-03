@@ -5,9 +5,11 @@ import {
 	BaseModalCommand, CommandType
 } from './Commands/';
 import { BaseClient, Logger } from '../index';
+import { ClientEvents } from 'oceanic.js';
 
 export type BaseModuleDatas = {
-	name: string
+	name: string,
+	events: Array<keyof ClientEvents>
 }
 
 export type ModuleCommandRegisterData<Command> = {
@@ -24,6 +26,7 @@ export type ModuleCommandsRegisterDatas = {
 
 export abstract class BaseModule {
 	protected name: string;
+	protected events: Array<keyof ClientEvents>;
 	private readonly client: BaseClient;
 
 	protected applicationCommands: Map<string, BaseApplicationCommand>;
@@ -34,6 +37,7 @@ export abstract class BaseModule {
 	protected constructor(client: BaseClient, datas: BaseModuleDatas) {
 		this.client = client;
 		this.name = datas.name;
+		this.events = datas.events;
 	}
 
 	protected getClient(): BaseClient {
@@ -42,6 +46,10 @@ export abstract class BaseModule {
 
 	public getName(): string {
 		return this.name;
+	}
+
+	protected getEvents(): Array<keyof ClientEvents> {
+		return this.events;
 	}
 
 	protected makeCacheCommands ({ application, autoCompletes, components, modals }: ModuleCommandsRegisterDatas): void {
