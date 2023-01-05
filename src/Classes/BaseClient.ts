@@ -5,9 +5,11 @@ export abstract class BaseClient extends Client {
 	protected modules: Map<string, BaseModule>;
 	protected constructor(options?: ClientOptions) {
 		super(options);
+
+		this.modules = new Map();
 	}
 
-	protected registerModules(modules: Array<BaseModule>): void {
+	public registerModules(modules: Array<BaseModule>): void {
 		modules.forEach((module) => {
 			console.log(`Successfully registered ${module.getName()} module`);
 			this.modules.set(module.getName(), module);
