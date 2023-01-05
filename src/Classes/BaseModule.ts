@@ -8,7 +8,7 @@ import { BaseClient, Logger } from '../index';
 import { ClientEvents } from 'oceanic.js';
 import { BaseEvent } from './BaseEvent';
 
-export type BaseModuleDatas = {
+export type BaseModuleOptions = {
 	name: string,
 	events: Array<keyof ClientEvents>
 }
@@ -29,6 +29,7 @@ export abstract class BaseModule {
 	protected name: string;
 	protected events: Array<keyof ClientEvents>;
 	private readonly client: BaseClient;
+	private readonly options: BaseModuleOptions;
 	protected eventsCache: Map<keyof ClientEvents, BaseEvent>;
 
 	// TODO make manual Command registering
@@ -37,10 +38,11 @@ export abstract class BaseModule {
 	protected componentCommands: Map<string, BaseComponentCommand>;
 	protected modalCommands: Map<string, BaseModalCommand>;
 
-	protected constructor(client: BaseClient, datas: BaseModuleDatas) {
+	protected constructor(client: BaseClient, options: BaseModuleOptions) {
 		this.client = client;
-		this.name = datas.name;
-		this.events = datas.events;
+		this.options = options;
+		this.name = options.name;
+		this.events = options.events;
 		this.eventsCache = new Map();
 	}
 
@@ -50,6 +52,10 @@ export abstract class BaseModule {
 
 	public getName(): string {
 		return this.name;
+	}
+
+	public getOptions<OptionsType>(): BaseModuleOptions & OptionsType {
+		return <BaseModuleOptions & OptionsType>(this.options);
 	}
 
 	protected getEvents(): Array<keyof ClientEvents> {
@@ -91,7 +97,7 @@ export abstract class BaseModule {
 	public handleEvent(name: keyof ClientEvents, args: ClientEvents[keyof ClientEvents]): void {
 		const event = this.eventsCache.get(name);
 		if (event) {
-			event.run(args);
+			event.run(...args);
 		}
 	}
 
