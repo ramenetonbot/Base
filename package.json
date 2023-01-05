@@ -1,6 +1,6 @@
 {
   "name": "@ramenetonbot/base",
-  "version": "0.0.8",
+  "version": "0.0.17",
   "description": "Base classes for the project",
   "main": "dist/index.js",
   "files": [
@@ -9,7 +9,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "upload": "npm run build && npm publish"
+    "release": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",

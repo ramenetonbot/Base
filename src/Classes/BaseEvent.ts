@@ -1,5 +1,5 @@
 
-import { BaseClient, BaseModule } from '../index';
+import { BaseClient, BaseModule, Logger } from '../index';
 import { ClientEvents } from 'oceanic.js';
 
 
@@ -12,5 +12,10 @@ export abstract class BaseEvent {
 	}
 
 	abstract run(...args: ClientEvents[keyof ClientEvents]): void
+
+	protected error (content: string): void {
+		Logger.error(`${this.module.getName()}-${this.constructor.name}: ${content}`);
+		return;
+	}
 
 }
