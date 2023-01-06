@@ -2,22 +2,20 @@ import {
 	BaseApplicationCommand,
 	BaseAutoCompleteCommand,
 	BaseComponentCommand,
-	BaseModalCommand, CommandType
-} from './Commands/';
-import { BaseClient, Logger } from '../index';
+	BaseModalCommand, CommandType,
+	BaseEvent,
+	BaseClient, Logger
+} from '../index';
 import { ClientEvents } from 'oceanic.js';
-import { BaseEvent } from './BaseEvent';
 
 export type BaseModuleOptions = {
 	name: string,
 	events: Array<keyof ClientEvents>
 }
-
 export type ModuleCommandRegisterData<Command> = {
 	name: string
 	command: Command
 }
-
 export type ModuleCommandsRegisterDatas = {
 	application: Array<ModuleCommandRegisterData<BaseApplicationCommand>>
 	autoCompletes: Array<ModuleCommandRegisterData<BaseAutoCompleteCommand>>
