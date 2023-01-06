@@ -1,5 +1,5 @@
 import { Client, ClientOptions } from 'oceanic.js';
-import { BaseModule } from '../index';
+import { BaseModule, Logger } from '../index';
 
 export abstract class BaseClient extends Client {
 	protected modules: Map<string, BaseModule>;
@@ -11,7 +11,7 @@ export abstract class BaseClient extends Client {
 
 	public registerModules(modules: Array<BaseModule>): void {
 		modules.forEach((module) => {
-			console.log(`Successfully registered ${module.getName()} module`);
+			Logger.log(`Successfully registered ${module.getName()} module`, 'module');
 			this.modules.set(module.getName(), module);
 		});
 	}
