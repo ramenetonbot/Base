@@ -1,6 +1,6 @@
 {
   "name": "@ramenetonbot/base",
-  "version": "0.0.17",
+  "version": "0.0.19",
   "description": "Base classes for the project",
   "main": "dist/index.js",
   "files": [
