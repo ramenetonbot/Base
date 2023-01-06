@@ -1,6 +1,7 @@
 import * as chalk from 'chalk';
 
 export type LogType = 'debug' | 'error' | 'warn' | 'log' | 'module' | 'client' | 'command';
+
 export class Logger {
 	public static log (content: string, type: LogType = 'log') {
 		switch (type) {
@@ -20,6 +21,7 @@ export class Logger {
 				return console.log(this.formatLog(content, type, chalk.blue.bgBlack));
 		}
 	}
+
 	public static error (content: string) {
 		return this.log(content, 'error');
 	}
@@ -41,10 +43,10 @@ export class Logger {
 		return `${date.getFullYear()}/${this.formatNumber(date.getMonth() + 1)}/${this.formatNumber(date.getDay() + 1)}-${this.formatNumber(date.getHours())}:${this.formatNumber(date.getMinutes())}:${this.formatNumber(date.getSeconds())}`;
 	}
 
-
 	// old -> 2023/1/2-4:5:26
 	// new -> 2023/01/02-04:05:26
 	private static formatNumber (n: number): string {
 		return n.toString().length === 1 ? '0' + n : n.toString();
 	}
+
 }
